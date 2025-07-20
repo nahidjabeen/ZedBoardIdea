@@ -1,0 +1,630 @@
+NAHID JABEEN, 7/20/2025
+
+
+WINDOWS, WSL, & VERSION OF UBUNTU
+---------------------------------
+
+1) WINDOWS COMMAND PROMPT -> RUN AS ADMINISTRATOR
+Microsoft Windows [Version 10.0.26100.4652]
+(c) Microsoft Corporation. All rights reserved.
+
+2) WSL 2 HELP
+C:\Windows\System32>wsl --help
+
+3) LIST VERSIONS OF LINUX DISTRIBUTIONS
+C:\Windows\System32>wsl --list --online
+
+4) INSTALL Ubuntu-22.04
+
+C:\Windows\System32>wsl --install -d Ubuntu-22.04
+
+...
+wsl: Using legacy distribution registration. Consider using a tar based distribution instead.
+Downloading: Ubuntu 22.04 LTS
+Ubuntu 22.04 LTS has been downloaded.
+Distribution successfully installed. It can be launched via 'wsl.exe -d Ubuntu 22.04 LTS'
+Launching Ubuntu 22.04 LTS...
+Installing, this may take a few minutes...
+Please create a default UNIX user account. The username does not need to match your Windows username.
+For more information visit: https://aka.ms/wslusers
+Enter new UNIX username: nahid
+New password:nahidpw
+Retype new password:nahidpw
+passwd: password updated successfully
+Installation successful!
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 6.6.87.2-microsoft-standard-WSL2 x86_64)
+...
+
+
+
+PETALINUX DOWNLOAD
+------------------
+
+1) DOWNLOAD PETALINUX INSTALLATION FILES
+petalinux-v2024.2-11062026-installer.run 
+AND 
+plnx-env-setup.sh
+
+
+2) COPY THE FILES UNDER A USER FOLDER (nahid)
+
+nahid@Nice2behere:~/petalinux$ pwd
+/home/nahid/petalinux
+
+nahid@Nice2behere:~/petalinux$ ls -l
+total 3077768
+-rw-r--r-- 1 nahid nahid 3151611514 Mar 14 07:04 petalinux-v2024.2-11062026-installer.run
+-rw-r--r-- 1 nahid nahid        272 Mar 14 07:04 petalinux-v2024.2-11062026-installer.run:Zone.Identifier
+-rw-r--r-- 1 nahid nahid       6097 Apr 11 15:06 plnx-env-setup.sh
+-rw-r--r-- 1 nahid nahid         68 Apr 11 15:06 plnx-env-setup.sh:Zone.Identifier
+nahid@Nice2behere:~/petalinux$ chmod +x plnx-env-setup.sh
+nahid@Nice2behere:~/petalinux$ chmod +x petalinux-v2024.2-11062026-installer.run
+nahid@Nice2behere:~/petalinux$ ls -l
+total 3077768
+-rwxr-xr-x 1 nahid nahid 3151611514 Mar 14 07:04 petalinux-v2024.2-11062026-installer.run
+-rw-r--r-- 1 nahid nahid        272 Mar 14 07:04 petalinux-v2024.2-11062026-installer.run:Zone.Identifier
+-rwxr-xr-x 1 nahid nahid       6097 Apr 11 15:06 plnx-env-setup.sh
+-rw-r--r-- 1 nahid nahid         68 Apr 11 15:06 plnx-env-setup.sh:Zone.Identifier
+
+
+3) RESOLVE BASH ISSUE
+
+nahid@Nice2behere:~/petalinux$ sudo dpkg-reconfigure dash
+[sudo] password for nahid:
+Removing 'diversion of /bin/sh to /bin/sh.distrib by dash'
+Adding 'diversion of /bin/sh to /bin/sh.distrib by bash'
+Removing 'diversion of /usr/share/man/man1/sh.1.gz to /usr/share/man/man1/sh.distrib.1.gz by dash'
+Adding 'diversion of /usr/share/man/man1/sh.1.gz to /usr/share/man/man1/sh.distrib.1.gz by bash'
+
+
+PETALINUX INSTALLATION
+----------------------
+
+1) RUN plnx-env-setup.sh
+
+nahid@Nice2behere:~/petalinux$ sudo ./plnx-env-setup.sh
+cat: /etc/centos-release: No such file or directory
+***************************************************************
+PetaLinux Environment Setup Tool
+Running on Ubuntu 22.04.5 LTS (6.6.87.2-microsoft-standard-WSL2)
+***************************************************************
+
+NOTE: Check for superuser...SUCCESS! (from nahid)
+NOTE: Checking for DASH shell as default (Ubuntu only)...NOT FOUND!
+...
+...
+
+INFO: Environment setup complete!
+
+
+2) CREATE PETALINUX USER SINCE PETALINUX INSTALLATION ASKS FOR A LOCATION
+
+nahid@Nice2behere:/opt$ sudo mkdir petalinuxUser
+nahid@Nice2behere:/opt$ ls -l
+total 4
+drwxr-xr-x 2 root root 4096 Jul 19 10:31 petalinuxUser
+
+
+nahid@Nice2behere:/opt$ sudo chown nahid:nahid petalinuxUser/
+nahid@Nice2behere:/opt$ ls -l
+total 4
+drwxr-xr-x 2 nahid nahid 4096 Jul 19 10:31 petalinuxUser
+
+
+
+3) RUN 'petalinux-v2024.2-11062026-installer.run'
+
+nahid@Nice2behere:~/petalinux$ ./petalinux-v2024.2-11062026-installer.run
+./petalinux-v2024.2-11062026-installer.run: line 3: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8): No such file or directory
+./petalinux-v2024.2-11062026-installer.run: line 151: /home/nahid/petalinux/petalinux_installation.log: Permission denied
+tee: /home/nahid/petalinux/petalinux_installation.log: Permission denied
+PetaLinux CMD tools installer version 2024.2
+tee: /home/nahid/petalinux/petalinux_installation.log: Permission denied
+============================================
+tee: /home/nahid/petalinux/petalinux_installation.log: Permission denied
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+[WARNING] This is not a supported OS
+[INFO] Checking free disk space
+[INFO] Checking installed tools
+[INFO] Checking installed development libraries
+[INFO] Checking network and other services
+/bin/sh: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+[WARNING] No tftp server found - please refer to "UG1144  PetaLinux Tools Documentation Reference Guide" for its impact and solution
+
+LICENSE AGREEMENTS
+...
+...
+
+[INFO] PetaLinux SDK has been successfully set up and is ready to be used.
+
+ 
+4) TEST PETALINUX INSTALLATION
+
+nahid@Nice2behere:/opt/petalinuxUser$ ls -l
+total 24
+drwxr-xr-x 4 nahid nahid 4096 Jul 19 10:36 components
+drwxr-xr-x 2 nahid nahid 4096 Jul 19 10:34 licenses
+drwxr-xr-x 4 nahid nahid 4096 Jul 19 10:34 scripts
+-rw-r--r-- 1 nahid nahid 3542 Jul 19 10:35 settings.sh
+drwxr-xr-x 4 nahid nahid 4096 Jul 19 10:34 sysroots
+drwxr-xr-x 5 nahid nahid 4096 Jul 19 10:34 templates
+
+
+5) RUN 'source /opt/petalinuxUser/settings.sh'
+
+nahid@Nice2behere:/opt$ source /opt/petalinuxUser/settings.sh
+*************************************************************************************************************************************************
+The PetaLinux source code and images provided/generated are for demonstration purposes only.
+Please refer to https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2741928025/Moving+from+PetaLinux+to+Production+Deployment
+ for more details
+*************************************************************************************************************************************************
+PetaLinux environment set to '/opt/petalinuxUser'
+[WARNING] This is not a supported OS
+[INFO] Checking free disk space
+[INFO] Checking installed tools
+[INFO] Checking installed development libraries
+[INFO] Checking network and other services
+[WARNING] No tftp server found - please refer to "UG1144 2024.2 PetaLinux Tools Documentation Reference Guide" for its impact and solution
+
+
+6) PETALINUX TOOLS AVAILABLE FOR USE
+
+nahid@Nice2behere:/opt$ petalinux- (HIT TAB)
+petalinux-boot     petalinux-build    petalinux-config   petalinux-create   petalinux-devtool  petalinux-package  petalinux-upgrade  petalinux-util
+
+
+
+7) USE PETALINUX TOOL 'petalinux-create' TO CREATE A PROJECT 'BillLabProject'
+
+a) CREATE A FOLDER 'petalinuxZed' TO KEEP THE PROJECT
+
+nahid@Nice2behere:/opt$ sudo mkdir petalinuxZed
+nahid@Nice2behere:/opt$ ls -l
+total 8
+drwxr-xr-x 7 nahid nahid 4096 Jul 19 10:36 petalinuxUser
+drwxr-xr-x 2 root  root  4096 Jul 19 10:43 petalinuxZed
+
+nahid@Nice2behere:/opt$ sudo chown nahid:nahid petalinuxZed/
+nahid@Nice2behere:/opt$ ls -l
+total 8
+drwxr-xr-x 7 nahid nahid 4096 Jul 19 10:36 petalinuxUser
+drwxr-xr-x 2 nahid nahid 4096 Jul 19 10:43 petalinuxZed
+
+
+b) RUN 'petalinux-create --type project --template zynq --name BillLabProject' in petalinuxZed folder
+
+nahid@Nice2behere:/opt/petalinuxZed$ petalinux-create --type project --template zynq --name BillLabProject
+[NOTE] Argument: "--type project" has been deprecated. It is recommended to start using new python command line Argument.
+[NOTE] Use: petalinux-create project [OPTIONS]
+[INFO] Create project: BillLabProject
+[INFO] New project successfully created in /opt/petalinuxZed/BillLabProject
+
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ ls -l
+total 4
+drwxr-xr-x 5 nahid nahid 4096 Jul 19 10:34 project-spec
+
+
+
+USE XSA FILE 'system.xsa' TO DO 'petalinux-config'
+-------------------------------------------------
+WE JUST NEED THE *.xsa FILE FOR BUILDING A PROJECT
+
+
+1) COPY 'system.xsa' TO 'BillLabProject' 
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ ls -l
+total 456
+drwxr-xr-x 5 nahid nahid   4096 Jul 19 10:34 project-spec
+-rw-r--r-- 1 nahid nahid 457430 Jul 17 16:57 system.xsa
+-rw-r--r-- 1 nahid nahid    101 Jul 17 16:57 system.xsa:Zone.Identifier
+
+
+
+2) RESOLVE LOCALE ISSUE USING THE FOLLOWING THREE COMMANDS
+
+a) sudo apt install locale
+b) sudo locale-gen en_US.UTF-8
+c) sudo dpkg-reconfigure locales
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ sudo apt install locale
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package locale
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ sudo locale-gen en_US.UTF-8
+Generating locales (this might take a while)...
+  en_US.UTF-8... done
+Generation complete.
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ sudo dpkg-reconfigure locales
+Generating locales (this might take a while)...
+  en_US.UTF-8... done
+Generation complete.
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$
+
+
+
+3) RESOLVE libtinfo.so.5 ISSUE USING THE FOLLOWING THREE COMMANDS
+
+a) sudo apt update
+b) sudo apt install ./libtinfo5_6.3-2ubuntu0.1_amd64.deb
+c) wget http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+
+a) sudo apt update
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ sudo apt update
+Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Fetched 384 kB in 1s (339 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+82 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+b) wget http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ wget http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+--2025-07-19 15:06:33--  http://security.ubuntu.com/ubuntu/pool/universe/n/ncurses/libtinfo5_6.3-2ubuntu0.1_amd64.deb
+Resolving security.ubuntu.com... 185.125.190.81, 185.125.190.82, 91.189.91.81, ...
+Connecting to security.ubuntu.com|185.125.190.81|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 100086 (98K) [application/vnd.debian.binary-package]
+Saving to: ‘libtinfo5_6.3-2ubuntu0.1_amd64.deb’
+
+libtinfo5_6.3-2ubuntu0.1_amd64.deb                         100%[======================================================================================================================================>]  97.74K   268KB/s    in 0.4s
+
+2025-07-19 15:06:34 (268 KB/s) - ‘libtinfo5_6.3-2ubuntu0.1_amd64.deb’ saved [100086/100086]
+
+
+c) sudo apt install ./libtinfo5_6.3-2ubuntu0.1_amd64.deb
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ sudo apt install ./libtinfo5_6.3-2ubuntu0.1_amd64.deb
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Note, selecting 'libtinfo5' instead of './libtinfo5_6.3-2ubuntu0.1_amd64.deb'
+The following NEW packages will be installed:
+  libtinfo5
+0 upgraded, 1 newly installed, 0 to remove and 82 not upgraded.
+Need to get 100 kB of archives.
+After this operation, 557 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libtinfo5 amd64 6.3-2ubuntu0.1 [100 kB]
+Fetched 100 kB in 1s (155 kB/s)
+Selecting previously unselected package libtinfo5:amd64.
+(Reading database ... 56611 files and directories currently installed.)
+Preparing to unpack .../libtinfo5_6.3-2ubuntu0.1_amd64.deb ...
+Unpacking libtinfo5:amd64 (6.3-2ubuntu0.1) ...
+Setting up libtinfo5:amd64 (6.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.8) ...
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$
+
+
+
+4) 'petalinux-config' USING 'system.xsa' (DESIGNED BY ABUL KHONDKER, CLARKSON UNIVERSITY)
+
+NOTE: 'system.xsa' WAS COPIED TO 'BillLabProject' 
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ petalinux-config --get-hw-description=/opt/petalinuxZed/BillLabProject/
+[INFO] Getting hardware description
+[INFO] Bitbake is not available, some functionality may be reduced.
+[INFO] Using HW file: /opt/petalinuxZed/BillLabProject/project-spec/hw-description/system.xsa
+[INFO] Getting Platform info from HW file
+[INFO] Generating Kconfig for project
+[INFO] Menuconfig project
+[INFO] Generating kconfig for rootfs
+[INFO] Silentconfig rootfs
+[INFO] Generating configuration files
+[INFO] Adding user layers
+[INFO] Generating machine conf file
+[INFO] Generating plnxtool conf file
+[INFO] Generating workspace directory
+NOTE: Starting bitbake server...
+NOTE: Started PRServer with DBfile: /opt/petalinuxZed/BillLabProject/build/cache/prserv.sqlite3, Address: 127.0.0.1:40757, PID: 62684
+INFO: Specified workspace already set up, leaving as-is
+INFO: Enabling workspace layer in bblayers.conf
+[INFO] Successfully configured project
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ petalinux-build
+[INFO] Building project
+[INFO] Bitbake is not available, some functionality may be reduced.
+[INFO] Using HW file: /opt/petalinuxZed/BillLabProject/project-spec/hw-description/system.xsa
+[INFO] Getting Platform info from HW file
+[INFO] Silentconfig project
+[INFO] Silentconfig rootfs
+[INFO] Generating configuration files
+[INFO] Generating workspace directory
+NOTE: Starting bitbake server...
+NOTE: Started PRServer with DBfile: /opt/petalinuxZed/BillLabProject/build/cache/prserv.sqlite3, Address: 127.0.0.1:44637, PID: 62827
+INFO: Specified workspace already set up, leaving as-is
+[INFO] bitbake petalinux-image-minimal
+NOTE: Started PRServer with DBfile: /opt/petalinuxZed/BillLabProject/build/cache/prserv.sqlite3, Address: 127.0.0.1:39223, PID: 62886
+WARNING: XSCT has been deprecated. It will still be available for several releases. In the future, it's recommended to start new projects with SDT workflow.
+WARNING: You are running bitbake under WSLv2, this works properly but you should optimize your VHDX file eventually to avoid running out of storage space
+Loading cache: 100% |                                                                                                                                                                                                     | ETA:  --:--:--
+Loaded 0 entries from dependency cache.
+Parsing recipes: 100% |#########################################################################################################################################################################################| Time: 0:01:20
+Parsing of 5800 .bb files complete (0 cached, 5800 parsed). 8454 targets, 1106 skipped, 27 masked, 0 errors.
+NOTE: Resolving any missing task queue dependencies
+NOTE: Fetching uninative binary shim file:///opt/petalinuxZed/BillLabProject/components/yocto/downloads/uninative/6bf00154c5a7bc48adbf63fd17684bb87eb07f4814fbb482a3fbd817c1ccf4c5/x86_64-nativesdk-libc-4.6.tar.xz;sha256sum=6bf00154c5a7bc48adbf63fd17684bb87eb07f4814fbb482a3fbd817c1ccf4c5 (will check PREMIRRORS first)
+Checking sstate mirror object availability: 100% |##############################################################################################################################################################| Time: 0:01:07
+Sstate summary: Wanted 2724 Local 0 Mirrors 2516 Missed 208 Current 0 (92% match, 0% complete)
+NOTE: Executing Tasks
+NOTE: Tasks Summary: Attempted 6008 tasks of which 5251 didn't need to be rerun and all succeeded.
+
+Summary: There were 2 WARNING messages.
+[INFO] Failed to copy built images to tftp dir: /tftpboot
+[INFO] Successfully built project
+
+
+
+
+
+QEMU RUN login: petalinux
+-------------------------
+
+petalinux-boot --qemu --kernel
+
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ petalinux-boot --qemu --kernel
+[NOTE] Argument: "--qemu" has been deprecated. It is recommended to start using new python command line Argument.
+[NOTE] Use: petalinux-boot qemu [OPTIONS]
+[INFO] Set QEMU tftp to "/tftpboot"
+[INFO] qemu-system-aarch64 -M arm-generic-fdt-7series -machine linux=on  -serial /dev/null -serial mon:stdio -display none  -dtb /opt/petalinuxZed/BillLabProject/images/linux/system.dtb -kernel /opt/petalinuxZed/BillLabProject/images/linux/zImage -initrd /opt/petalinuxZed/BillLabProject/images/linux/rootfs.cpio.gz.u-boot -gdb tcp:localhost:9000  -net nic,netdev=eth0 -netdev user,id=eth0,tftp=/tftpboot -device loader,addr=0xf8000008,data=0xDF0D,data-len=4 -device loader,addr=0xf8000140,data=0x00500801,data-len=4 -device loader,addr=0xf800012c,data=0x1ed044d,data-len=4 -device loader,addr=0xf8000108,data=0x0001e008,data-len=4 -device loader,addr=0xF8000910,data=0xF,data-len=0x4
+qemu-system-aarch64: warning: nic ethernet@e000c000 has no peer
+Booting Linux on physical CPU 0x0
+Linux version 6.6.40-xilinx-g2b7f6f70a62a (oe-user@oe-host) (arm-xilinx-linux-gnueabi-gcc (GCC) 13.3.0, GNU ld (GNU Binutils) 2.42.0.20240716) #1 SMP PREEMPT Tue Oct 29 11:52:30 UTC 2024
+CPU: ARMv7 Processor [413fc090] revision 0 (ARMv7), cr=10c5387d
+CPU: PIPT / VIPT nonaliasing data cache, VIPT nonaliasing instruction cache
+OF: fdt: Machine model: xlnx,zynq-7000
+earlycon: cdns0 at MMIO 0xe0001000 (options '115200n8')
+printk: bootconsole [cdns0] enabled
+Memory policy: Data cache writealloc
+cma: Reserved 16 MiB at 0x1f000000 on node -1
+Zone ranges:
+  Normal   [mem 0x0000000000000000-0x000000001fffffff]
+  HighMem  empty
+Movable zone start for each node
+Early memory node ranges
+  node   0: [mem 0x0000000000000000-0x000000001fffffff]
+Initmem setup node 0 [mem 0x0000000000000000-0x000000001fffffff]
+percpu: Embedded 12 pages/cpu s17940 r8192 d23020 u49152
+Kernel command line: console=ttyPS0,115200 earlycon root=/dev/ram0 rw
+Dentry cache hash table entries: 65536 (order: 6, 262144 bytes, linear)
+Inode-cache hash table entries: 32768 (order: 5, 131072 bytes, linear)
+Built 1 zonelists, mobility grouping on.  Total pages: 130048
+mem auto-init: stack:all(zero), heap alloc:off, heap free:off
+Memory: 465728K/524288K available (7168K kernel code, 251K rwdata, 2128K rodata, 1024K init, 146K bss, 42176K reserved, 16384K cma-reserved, 0K highmem)
+SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+rcu: Preemptible hierarchical RCU implementation.
+rcu:    RCU event tracing is enabled.
+rcu:    RCU restricting CPUs from NR_CPUS=4 to nr_cpu_ids=2.
+rcu: RCU calculated value of scheduler-enlistment delay is 10 jiffies.
+rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=2
+NR_IRQS: 16, nr_irqs: 16, preallocated irqs: 16
+efuse mapped to (ptrval)
+slcr mapped to (ptrval)
+GIC physical location is 0xf8f01000
+L2C: platform modifies aux control register: 0x00000000 -> 0x00400000
+L2C: DT/platform modifies aux control register: 0x00000000 -> 0x00400000
+L2C-310 errata 588369 769419 enabled
+L2C-310 full line of zeros enabled for Cortex-A9
+L2C-310 cache controller enabled, 8 ways, 64 kB
+L2C-310: CACHE_ID 0x00000000, AUX_CTRL 0x00000000
+rcu: srcu_init: Setting srcu_struct sizes based on contention.
+zynq_clock_init: clkc starts at (ptrval)
+Zynq clock init
+sched_clock: 64 bits at 108MHz, resolution 9ns, wraps every 4398046511099ns
+clocksource: arm_global_timer: mask: 0xffffffffffffffff max_cycles: 0x18fc27f592, max_idle_ns: 440795203333 ns
+Switching to timer-based delay loop, resolution 9ns
+Console: colour dummy device 80x30
+Calibrating delay loop (skipped), value calculated using timer frequency.. 216.66 BogoMIPS (lpj=1083333)
+CPU: Testing write buffer coherency: ok
+CPU0: Spectre v2: using BPIALL workaround
+pid_max: default: 32768 minimum: 301
+Mount-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+Mountpoint-cache hash table entries: 1024 (order: 0, 4096 bytes, linear)
+CPU0: thread -1, cpu 0, socket 0, mpidr 80000000
+Setting up static identity map for 0x100000 - 0x100060
+rcu: Hierarchical SRCU implementation.
+rcu:    Max phase no-delay instances is 1000.
+smp: Bringing up secondary CPUs ...
+CPU1: thread -1, cpu 1, socket 0, mpidr 80000001
+CPU1: Spectre v2: using BPIALL workaround
+smp: Brought up 1 node, 2 CPUs
+SMP: Total of 2 processors activated (433.33 BogoMIPS).
+CPU: All CPU(s) started in SVC mode.
+devtmpfs: initialized
+VFP support v0.3: implementor 41 architecture 3 part 30 variant 9 rev 0
+clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 19112604462750000 ns
+futex hash table entries: 512 (order: 3, 32768 bytes, linear)
+pinctrl core: initialized pinctrl subsystem
+NET: Registered PF_NETLINK/PF_ROUTE protocol family
+DMA: preallocated 256 KiB pool for atomic coherent allocations
+thermal_sys: Registered thermal governor 'step_wise'
+cpuidle: using governor menu
+platform axi: Fixed dependency cycle(s) with /axi/interrupt-controller@f8f01000
+platform replicator: Fixed dependency cycle(s) with /axi/etb@f8801000
+amba f8801000.etb: Fixed dependency cycle(s) with /replicator
+platform replicator: Fixed dependency cycle(s) with /axi/tpiu@f8803000
+amba f8803000.tpiu: Fixed dependency cycle(s) with /replicator
+platform replicator: Fixed dependency cycle(s) with /axi/funnel@f8804000
+amba f8804000.funnel: Fixed dependency cycle(s) with /axi/ptm@f889d000
+amba f8804000.funnel: Fixed dependency cycle(s) with /axi/ptm@f889c000
+amba f8804000.funnel: Fixed dependency cycle(s) with /replicator
+amba f8804000.funnel: Fixed dependency cycle(s) with /axi/ptm@f889c000
+amba f889c000.ptm: Fixed dependency cycle(s) with /axi/funnel@f8804000
+amba f8804000.funnel: Fixed dependency cycle(s) with /axi/ptm@f889d000
+amba f889d000.ptm: Fixed dependency cycle(s) with /axi/funnel@f8804000
+hw-breakpoint: debug architecture 0x4 unsupported.
+e0001000.serial: ttyPS0 at MMIO 0xe0001000 (irq = 26, base_baud = 992063) is a xuartps
+printk: console [ttyPS0] enabled
+printk: console [ttyPS0] enabled
+printk: bootconsole [cdns0] disabled
+printk: bootconsole [cdns0] disabled
+SCSI subsystem initialized
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+mc: Linux media interface: v0.10
+videodev: Linux video capture interface: v2.00
+pps_core: LinuxPPS API ver. 1 registered
+pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+PTP clock support registered
+EDAC MC: Ver: 3.0.0
+FPGA manager framework
+Advanced Linux Sound Architecture Driver Initialized.
+vgaarb: loaded
+clocksource: Switched to clocksource arm_global_timer
+NET: Registered PF_INET protocol family
+IP idents hash table entries: 8192 (order: 4, 65536 bytes, linear)
+tcp_listen_portaddr_hash hash table entries: 512 (order: 0, 4096 bytes, linear)
+Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+TCP established hash table entries: 4096 (order: 2, 16384 bytes, linear)
+TCP bind hash table entries: 4096 (order: 4, 65536 bytes, linear)
+TCP: Hash tables configured (established 4096 bind 4096)
+UDP hash table entries: 256 (order: 1, 8192 bytes, linear)
+UDP-Lite hash table entries: 256 (order: 1, 8192 bytes, linear)
+NET: Registered PF_UNIX/PF_LOCAL protocol family
+RPC: Registered named UNIX socket transport module.
+RPC: Registered udp transport module.
+RPC: Registered tcp transport module.
+RPC: Registered tcp-with-tls transport module.
+RPC: Registered tcp NFSv4.1 backchannel transport module.
+PCI: CLS 0 bytes, default 64
+armv7-pmu f8891000.pmu: hw perfevents: no interrupt-affinity property, guessing.
+hw perfevents: enabled with armv7_cortex_a9 PMU driver, 7 counters available
+Trying to unpack rootfs image as initramfs...
+workingset: timestamp_bits=30 max_order=17 bucket_order=0
+jffs2: version 2.2. (NAND) (SUMMARY)  © 2001-2006 Red Hat, Inc.
+io scheduler mq-deadline registered
+io scheduler kyber registered
+io scheduler bfq registered
+zynq-pinctrl 700.pinctrl: zynq pinctrl initialized
+dma-pl330 f8003000.dma-controller: Loaded driver for PL330 DMAC-241330
+dma-pl330 f8003000.dma-controller:      DBUFF-256x8bytes Num_Chans-8 Num_Peri-4 Num_Events-16
+brd: module loaded
+loop: module loaded
+spi_master spi0: cannot find modalias for /axi/spi@e000d000/flash@0
+spi_master spi0: Failed to create SPI device for /axi/spi@e000d000/flash@0
+CAN device driver interface
+Freeing initrd memory: 25256K
+macb e000b000.ethernet eth0: Cadence GEM rev 0x00020118 at 0xe000b000 irq 40 (00:0a:35:00:1e:53)
+e1000e: Intel(R) PRO/1000 Network Driver
+e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
+usbcore: registered new interface driver usb-storage
+i2c_dev: i2c /dev entries driver
+cdns-wdt f8005000.watchdog: Xilinx Watchdog Timer with timeout 10s
+EDAC MC: ECC not enabled
+Xilinx Zynq CpuIdle Driver started
+sdhci: Secure Digital Host Controller Interface driver
+sdhci: Copyright(c) Pierre Ossman
+sdhci-pltfm: SDHCI platform and OF driver helper
+ledtrig-cpu: registered to indicate activity on CPUs
+clocksource: ttc_clocksource: mask: 0xffff max_cycles: 0xffff, max_idle_ns: 826992825 ns
+timer #0 at (ptrval), irq=43
+usbcore: registered new interface driver usbhid
+usbhid: USB HID core driver
+fpga_manager fpga0: Xilinx Zynq FPGA Manager registered
+NET: Registered PF_INET6 protocol family
+Segment Routing with IPv6
+In-situ OAM (IOAM) with IPv6
+sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+NET: Registered PF_PACKET protocol family
+can: controller area network core
+NET: Registered PF_CAN protocol family
+can: raw protocol
+can: broadcast manager protocol
+can: netlink gateway - max_hops=1
+Registering SWP/SWPB emulation handler
+of-fpga-region fpga-region: FPGA Region probed
+of_cfs_init
+of_cfs_init: OK
+clk: Disabling unused clocks
+ALSA device list:
+  No soundcards found.
+mmc0: SDHCI controller on e0100000.mmc [e0100000.mmc] using ADMA 64-bit
+Freeing unused kernel image (initmem) memory: 1024K
+Run /init as init process
+INIT: version 3.04 booting
+Starting udev
+udevd[75]: starting version 3.2.14
+random: crng init done
+udevd[76]: starting eudev-3.2.14
+macb e000b000.ethernet enx000a35001e53: renamed from eth0
+hwclock: can't open '/dev/misc/rtc': No such file or directory
+Fri Mar  9 12:34:56 UTC 2018
+hwclock: can't open '/dev/misc/rtc': No such file or directory
+hwclock: can't open '/dev/misc/rtc': No such file or directory
+INIT: Entering runlevel: 5
+Configuring network interfaces... udhcpc: SIOCGIFINDEX: No such device
+ifup: failed to bring up eth0
+udhcpc: started, v1.36.1
+macb e000b000.ethernet enx000a35001e53: PHY [e000b000.ethernet-ffffffff:00] driver [Marvell 88E1111] (irq=POLL)
+macb e000b000.ethernet enx000a35001e53: configuring for phy/rgmii-id link mode
+Marvell 88E1111 e000b000.ethernet-ffffffff:00: Downshift occurred from negotiated speed 1Gbps to actual speed 100Mbps, check cabling!
+macb e000b000.ethernet enx000a35001e53: Link is Up - 100Mbps/Full - flow control tx
+udhcpc: broadcasting discover
+udhcpc: broadcasting select for 10.0.2.15, server 10.0.2.2
+udhcpc: lease of 10.0.2.15 obtained from 10.0.2.2, lease time 86400
+/etc/udhcpc.d/50default: Adding DNS 10.0.2.3
+Starting OpenBSD Secure Shell server: sshd
+  generating ssh RSA host key...
+  generating ssh ECDSA host key...
+  generating ssh ED25519 host key...
+done.
+Starting rpcbind daemon...done.
+starting statd: done
+Starting internet superserver: inetd.
+NFS daemon support not enabled in kernel
+Starting syslogd/klogd: done
+Starting tcf-agent: OK
+
+********************************************************************************************
+The PetaLinux source code and images provided/generated are for demonstration purposes only.
+Please refer to https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/2741928025/Moving+from+PetaLinux+to+Production+Deployment
+for more details.
+********************************************************************************************
+PetaLinux 2024.2+release-S11061705 BillLabProject ttyPS0
+
+BillLabProject login: petalinux
+
+
+amba f8801000.etb: deferred probe pending
+amba f8803000.tpiu: deferred probe pending
+amba f8804000.funnel: deferred probe pending
+amba f889c000.ptm: deferred probe pending
+amba f889d000.ptm: deferred probe pending
+
+You are required to change your password immediately (administrator enforced).
+New password:iloveyou
+Retype new password:iloveyou
+BillLabProject:~$ ifconfig
+enx000a35001e53 Link encap:Ethernet  HWaddr 00:0A:35:00:1E:53
+          inet addr:10.0.2.15  Bcast:10.0.2.255  Mask:255.255.255.0
+          inet6 addr: fec0::20a:35ff:fe00:1e53/64 Scope:Site
+          inet6 addr: fe80::20a:35ff:fe00:1e53/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:3 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:14 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:1248 (1.2 KiB)  TX bytes:2132 (2.0 KiB)
+          Interrupt:40 Base address:0xb000
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:2 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:2 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:140 (140.0 B)  TX bytes:140 (140.0 B)
+
+BillLabProject:~$
+
+
+******************************************************************************
