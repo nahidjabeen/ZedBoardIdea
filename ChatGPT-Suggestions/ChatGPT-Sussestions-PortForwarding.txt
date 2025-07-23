@@ -1,0 +1,56 @@
+NAHID JABEEN				7/23/25
+
+
+ChatGPT Suggested Port forwarding to connect Vitis Unified IDE to QEMU for debugging
+
+
+Windows 11 ------------------------------------> WSL2 ------- Ubuntu ------- QEMU 
+
+Vitis Unified IDE 
+with Linux 
+Helloworld -----------------------------------------------------------------> QEMU
+
+
+Steps:
+
+1. At WSL Ubuntu run QEMU
+
+nahid@Nice2behere:/opt/petalinuxZed/BillLabProject$ petalinux-boot --qemu --kernel --qemu-args "-net nic -net user,hostfwd=tcp::1534-:1534"
+
+2. At QEMU run tcf-agent process with port forwarding
+
+BillLabProject:~$ tcf-agent -d TCP:1534 &
+
+
+3. At windows 11
+
+a) Run this command as Admin
+C:\Windows\System32>netsh interface portproxy add v4tov4 listenport=1534 listenaddress=0.0.0.0 connectport=1534 connectaddress=172.20.232.68
+
+Where Ubuntu's IP address is: 172.20.232.68
+
+
+b) Check your run
+C:\Windows\System32>netsh interface portproxy show all
+
+Listen on ipv4:             Connect to ipv4:
+
+Address         Port        Address         Port
+--------------- ----------  --------------- ----------
+0.0.0.0         1534        172.20.232.68   1534
+
+
+c) Ping 
+
+C:\Windows\System32>ping 172.20.232.68
+
+Pinging 172.20.232.68 with 32 bytes of data:
+Reply from 172.20.232.68: bytes=32 time<1ms TTL=64
+Reply from 172.20.232.68: bytes=32 time<1ms TTL=64
+Reply from 172.20.232.68: bytes=32 time<1ms TTL=64
+Reply from 172.20.232.68: bytes=32 time<1ms TTL=64
+
+
+Conclusion:
+
+But Vitis Unified IDE using 127.0.0.1 and port 1534 could not connect to QEMU and complained that there is no TCF agent running on 127.0.0.1.
